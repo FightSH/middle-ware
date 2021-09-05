@@ -47,6 +47,9 @@ public class NodeClient implements Watcher {
 
     public void getChildren() {
 
+
+
+
     }
 
     public void createNodeByAsyncAPI() throws InterruptedException, KeeperException {
@@ -66,5 +69,6 @@ public class NodeClient implements Watcher {
         if (Event.KeeperState.SyncConnected == watchedEvent.getState()) {
             countDownLatch.countDown();
         }
+
     }
 }
