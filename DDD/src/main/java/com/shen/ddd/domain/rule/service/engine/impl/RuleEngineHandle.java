@@ -1,6 +1,11 @@
 package com.shen.ddd.domain.rule.service.engine.impl;
 
+import com.shen.ddd.domain.rule.model.aggregates.TreeRuleRich;
+import com.shen.ddd.domain.rule.model.vo.DecisionMatter;
+import com.shen.ddd.domain.rule.model.vo.EngineResult;
+import com.shen.ddd.domain.rule.model.vo.TreeNodeInfo;
 import com.shen.ddd.domain.rule.repo.IRuleRepository;
+import com.shen.ddd.domain.rule.service.engine.EngineBase;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

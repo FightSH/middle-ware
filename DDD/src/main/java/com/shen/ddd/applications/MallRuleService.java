@@ -1,5 +1,8 @@
 package com.shen.ddd.applications;
 
+import com.shen.ddd.domain.rule.model.vo.DecisionMatter;
+import com.shen.ddd.domain.rule.model.vo.EngineResult;
+
 /**
  * 商超规则过滤服务：提供规则树决策功能
  */
@@ -10,7 +13,7 @@ public interface MallRuleService {
      * @param matter 决策物料
      * @return       决策结果
      */
-    Object process(final Object matter);
+    EngineResult process(final DecisionMatter matter);
 
 
 

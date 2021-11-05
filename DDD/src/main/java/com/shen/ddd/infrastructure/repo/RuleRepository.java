@@ -1,5 +1,6 @@
 package com.shen.ddd.infrastructure.repo;
 
+import com.shen.ddd.domain.rule.model.aggregates.TreeRuleRich;
 import com.shen.ddd.domain.rule.repo.IRuleRepository;
 import com.shen.ddd.infrastructure.repo.cache.RuleCacheRepository;
 import com.shen.ddd.infrastructure.repo.mysql.RuleMysqlRepository;
