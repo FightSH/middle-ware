@@ -1,16 +1,16 @@
 package com.shenhao.easyserver.core.springmvc.factory;
 
 import com.shenhao.easyserver.common.util.ReflectionUtil;
+import com.shenhao.easyserver.exception.ErrorResponse;
 import com.shenhao.easyserver.serialize.impl.JacksonSerializer;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.util.AsciiString;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Locale;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
@@ -28,6 +28,15 @@ public class FullHttpResponseFactory {
             Object result = ReflectionUtil.executeTargetMethod(targetObject, targetMethod, targetMethodParams.toArray());
             return buildSuccessResponse(result);
         }
+    }
+
+    public static FullHttpResponse getErrorResponse(String url, String message, HttpResponseStatus httpResponseStatus) {
+        ErrorResponse errorResponse = new ErrorResponse(httpResponseStatus.code(), httpResponseStatus.reasonPhrase(), message, url);
+        byte[] content = JSON_SERIALIZER.serialize(errorResponse);
+        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, httpResponseStatus, Unpooled.wrappedBuffer(content));
+        response.headers().set(CONTENT_TYPE, "application/json");
+        response.headers().setInt(CONTENT_LENGTH, response.content().readableBytes());
+        return response;
     }
 
     private static FullHttpResponse buildSuccessResponse(Object o) {
