@@ -1,6 +1,7 @@
 package com.shenhao.easyserver.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -35,9 +36,17 @@ public class EasyServer {
                             socketChannel.pipeline().addLast("decoder", new HttpRequestDecoder())
                                     .addLast("encoder", new HttpRequestEncoder())
                                     .addLast("aggregator", new HttpObjectAggregator(512 * 1024))
-                                    .addLast("handler",new HttpServerHandler() );
+                                    .addLast("handler", new HttpServerHandler());
                         }
-                    })
+                    });
+            Channel channel = bootstrap.bind(PORT).sync().channel();
+            channel.closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            log.info("shutdown......");
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
         }
     }
 }
